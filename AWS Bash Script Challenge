@@ -1,0 +1,33 @@
+Write a Bash script based on the following requirements:
+o	Creates 25 empty (0 KB) files. (Hint: Use the touch command.)
+o	The file names should be <yourName><number>, <yourName><number+1>, <yourName><number+2>, and so on.
+o	Design the script so that each time you run it, it creates the next batch of 25 files with increasing numbers starting with the last or maximum number that already exists.
+o	Do not hard code these numbers. You need to generate them by using automation.
+Test the script. Display a long list of the directory and its contents to validate that the script created the expected files.
+
+
+#!/bin/bash
+name="Khin"
+last_number=$(ls ${name}* 2>/dev/null | wc -1)
+for i in {1..25}; do
+  touch "${name}$((last_number + i))"
+done
+ls -l "${name}"*
+
+
+# Bash script explanation
+# Step1 - I created variable to set my name
+# Step2 - To count existing files and if there is no existing file, it will start from 0.
+  # ls ${name}* - to list all files start with "Khin".
+  # '$' is used as a commoand substitution together with parentheses to execute a command and substitute its output.
+  # '*' asterisk is for the output of all the file named "Khin".
+  # 2>/dev/null - to prevent error messages when printing ls. 
+  # Then pipe is used to pass the output of the former commands as the input of command wc -l.
+  # wc -l counts how many files are listed by the ls command. 
+  # Then its output is assigned to last-number.
+# Step3 - create new files.
+  # for i in {0..25}; do - This is loop to run 25 times, with i taking values from 1 to 25.
+  # touch command creates new files.
+  # (last_number+i) create files by adding numbers 0 to 25.
+# Step4 - List files to confirm.
+  # ls -l "${name}"* list all files start with the specified name and show permission details. 
